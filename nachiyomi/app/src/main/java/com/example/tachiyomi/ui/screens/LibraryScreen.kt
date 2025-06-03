@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -18,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.tachiyomi.data.SampleData
 import com.example.tachiyomi.model.Manga
+import com.example.tachiyomi.ui.components.NeomorphicCard
+import com.example.tachiyomi.ui.components.NeomorphicSurface
+import com.example.tachiyomi.ui.components.NeomorphicTopAppBar
 
 @Composable
 fun LibraryScreen(
@@ -27,7 +32,7 @@ fun LibraryScreen(
     
     Scaffold(
         topBar = {
-            TopAppBar(
+            NeomorphicTopAppBar(
                 title = { Text("Library") },
                 actions = {
                     IconButton(onClick = { /* Search functionality */ }) {
@@ -79,24 +84,37 @@ fun MangaGridItem(
     Column(
         modifier = modifier
             .clickable(onClick = onClick)
-            .width(120.dp),
+            .width(128.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Card(
-            elevation = 4.dp,
+        Box(
             modifier = Modifier
-                .height(160.dp)
+                .height(170.dp)
                 .fillMaxWidth()
         ) {
-            AsyncImage(
-                model = manga.thumbnailUrl,
-                contentDescription = manga.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
+            NeomorphicCard(
+                modifier = Modifier.fillMaxSize(),
+                cornerRadius = 12.dp,
+                shadowElevation = 6.dp
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
+                ) {
+                    AsyncImage(
+                        model = manga.thumbnailUrl,
+                        contentDescription = manga.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                }
+            }
         }
         
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         
         Text(
             text = manga.title,
@@ -114,22 +132,32 @@ fun EmptyLibrary(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        NeomorphicCard(
+            modifier = Modifier
+                .width(280.dp)
+                .padding(16.dp),
+            cornerRadius = 16.dp,
+            shadowElevation = 8.dp
         ) {
-            Text(
-                text = "Your library is empty",
-                style = MaterialTheme.typography.h6
-            )
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = "Add manga from the Browse tab",
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "Your library is empty",
+                    style = MaterialTheme.typography.h6
+                )
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                Text(
+                    text = "Add manga from the Browse tab",
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

@@ -2,12 +2,17 @@ package com.example.tachiyomi.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
+import com.example.tachiyomi.ui.components.NeomorphicCard
+import com.example.tachiyomi.ui.components.NeomorphicSurface
+import com.example.tachiyomi.ui.components.NeomorphicTopAppBar
+import androidx.compose.ui.draw.clip
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +69,7 @@ fun HistoryScreen(
     
     Scaffold(
         topBar = {
-            TopAppBar(
+            NeomorphicTopAppBar(
                 title = { Text("History") },
                 actions = {
                     IconButton(onClick = { /* Search functionality */ }) {
@@ -106,11 +111,12 @@ fun HistoryItem(
     val dateFormat = SimpleDateFormat("MMM dd, yyyy, HH:mm", Locale.getDefault())
     val formattedDate = dateFormat.format(historyEntry.lastReadAt)
     
-    Card(
+    NeomorphicCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        elevation = 2.dp
+        cornerRadius = 14.dp,
+        shadowElevation = 4.dp
     ) {
         Row(
             modifier = Modifier
@@ -119,18 +125,27 @@ fun HistoryItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Card(
+            NeomorphicCard(
                 modifier = Modifier
-                    .width(60.dp)
-                    .height(90.dp),
-                elevation = 4.dp
+                    .width(65.dp)
+                    .height(95.dp),
+                cornerRadius = 10.dp,
+                shadowElevation = 4.dp
             ) {
-                AsyncImage(
-                    model = historyEntry.manga.thumbnailUrl,
-                    contentDescription = historyEntry.manga.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
+                ) {
+                    AsyncImage(
+                        model = historyEntry.manga.thumbnailUrl,
+                        contentDescription = historyEntry.manga.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(6.dp))
+                    )
+                }
             }
             
             Column(
@@ -192,31 +207,41 @@ fun EmptyHistoryState(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+        NeomorphicCard(
+            modifier = Modifier
+                .padding(32.dp)
+                .fillMaxWidth(0.8f),
+            cornerRadius = 16.dp,
+            shadowElevation = 6.dp
         ) {
-            Icon(
-                imageVector = Icons.Filled.Search,
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
-            )
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Text(
-                text = "No reading history found",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
-            )
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = "Items you've read will appear here",
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(24.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = null,
+                    modifier = Modifier.size(64.dp),
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Text(
+                    text = "No reading history found",
+                    style = MaterialTheme.typography.h6,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                )
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                Text(
+                    text = "Items you've read will appear here",
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
         }
     }
 }

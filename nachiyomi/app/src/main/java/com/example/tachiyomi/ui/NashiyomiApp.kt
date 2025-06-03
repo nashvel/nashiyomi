@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
+import com.example.tachiyomi.ui.components.NeomorphicBottomBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -122,7 +123,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         Screen.Settings
     )
     
-    BottomNavigation {
+    NeomorphicBottomBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         
@@ -146,7 +147,9 @@ fun BottomNavigationBar(navController: NavHostController) {
                             restoreState = true
                         }
                     }
-                }
+                },
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
             )
         }
     }

@@ -4,11 +4,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
+import com.example.tachiyomi.ui.components.NeomorphicCard
+import com.example.tachiyomi.ui.components.NeomorphicSurface
+import com.example.tachiyomi.ui.components.NeomorphicTopAppBar
+import androidx.compose.ui.draw.clip
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +33,7 @@ fun BrowseScreen(
     
     Scaffold(
         topBar = {
-            TopAppBar(
+            NeomorphicTopAppBar(
                 title = { Text("Browse") },
                 actions = {
                     IconButton(onClick = { /* Search functionality */ }) {
@@ -60,10 +66,11 @@ fun MangaListItem(
 ) {
     var isFavorite by remember { mutableStateOf(manga.isFavorite) }
     
-    Card(
+    NeomorphicCard(
         modifier = modifier
             .fillMaxWidth(),
-        elevation = 4.dp
+        cornerRadius = 16.dp,
+        shadowElevation = 6.dp
     ) {
         Row(
             modifier = Modifier
@@ -72,18 +79,27 @@ fun MangaListItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Card(
+            NeomorphicCard(
                 modifier = Modifier
-                    .width(80.dp)
-                    .height(120.dp),
-                elevation = 2.dp
+                    .width(85.dp)
+                    .height(125.dp),
+                cornerRadius = 12.dp,
+                shadowElevation = 4.dp
             ) {
-                AsyncImage(
-                    model = manga.thumbnailUrl,
-                    contentDescription = manga.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
+                ) {
+                    AsyncImage(
+                        model = manga.thumbnailUrl,
+                        contentDescription = manga.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                }
             }
             
             Column(
@@ -148,16 +164,21 @@ fun Chip(
     text: String,
     modifier: Modifier = Modifier
 ) {
-    Surface(
-        color = MaterialTheme.colors.primary.copy(alpha = 0.1f),
-        shape = MaterialTheme.shapes.small,
-        modifier = modifier
+    NeomorphicSurface(
+        modifier = modifier,
+        cornerRadius = 8.dp,
+        shadowElevation = 2.dp
     ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.primary,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        )
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colors.primary.copy(alpha = 0.1f))
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+        ) {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.primary
+            )
+        }
     }
 }

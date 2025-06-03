@@ -12,9 +12,17 @@ val Teal200 = Color(0xFF80CBC4)
 val Teal500 = Color(0xFF009688)
 val Teal700 = Color(0xFF00796B)
 
-// Background colors
-val LightBackground = Color(0xFFF5F5F5)
-val DarkBackground = Color(0xFF121212)
+// Background colors - updated for neomorphism
+val LightBackground = Color(0xFFE6E9EF)  // Soft light gray for neomorphism
+val DarkBackground = Color(0xFF2D3035)   // Soft dark gray for dark neomorphism
+
+// Neomorphic shadow colors - light mode
+val LightShadowLight = Color(0xFFFFFFFF)  // White shadow for light theme
+val DarkShadowLight = Color(0xFFC8CCD8)   // Gray shadow for light theme
+
+// Neomorphic shadow colors - dark mode
+val LightShadowDark = Color(0xFF383C44)   // Light shadow for dark theme
+val DarkShadowDark = Color(0xFF23262A)    // Dark shadow for dark theme
 
 // Text colors
 val LightTextPrimary = Color(0xFF212121)

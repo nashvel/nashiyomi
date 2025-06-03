@@ -3,6 +3,7 @@ package com.example.tachiyomi.ui.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -15,6 +16,9 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Delete
+import com.example.tachiyomi.ui.components.NeomorphicCard
+import com.example.tachiyomi.ui.components.NeomorphicSurface
+import com.example.tachiyomi.ui.components.NeomorphicTopAppBar
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,7 +30,7 @@ import androidx.compose.ui.unit.dp
 fun SettingsScreen() {
     Scaffold(
         topBar = {
-            TopAppBar(
+            NeomorphicTopAppBar(
                 title = { Text("Settings") }
             )
         }
@@ -196,51 +200,61 @@ fun SettingsItem(
     onClick: () -> Unit,
     trailing: @Composable (() -> Unit)? = null
 ) {
-    Row(
+    NeomorphicCard(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 16.dp, vertical = 4.dp),
+        cornerRadius = 12.dp,
+        shadowElevation = 4.dp
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
-            modifier = Modifier.size(24.dp)
-        )
-        
-        Column(
+        Row(
             modifier = Modifier
-                .padding(start = 16.dp)
-                .weight(1f)
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.subtitle1
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                modifier = Modifier.size(24.dp)
             )
             
-            if (subtitle != null) {
-                Spacer(modifier = Modifier.height(2.dp))
-                
+            Column(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(1f)
+            ) {
                 Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+                    text = title,
+                    style = MaterialTheme.typography.subtitle1
+                )
+                
+                if (subtitle != null) {
+                    Spacer(modifier = Modifier.height(2.dp))
+                    
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+                    )
+                }
+            }
+            
+            if (trailing != null) {
+                trailing()
+            } else {
+                Icon(
+                    imageVector = Icons.Filled.ArrowForward,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.3f)
                 )
             }
         }
-        
-        if (trailing != null) {
-            trailing()
-        } else {
-            Icon(
-                imageVector = Icons.Filled.ArrowForward,
-                contentDescription = null,
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.3f)
-            )
-        }
     }
+    
+    Spacer(modifier = Modifier.height(8.dp))
     
     Divider(
         modifier = Modifier.padding(start = 56.dp),
@@ -257,42 +271,47 @@ fun SwitchSettingsItem(
 ) {
     var isChecked by remember { mutableStateOf(initialValue) }
     
-    Row(
+    NeomorphicCard(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                isChecked = !isChecked
-                onValueChange(isChecked)
-            }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 16.dp, vertical = 4.dp),
+        cornerRadius = 12.dp,
+        shadowElevation = 4.dp
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
-            modifier = Modifier.size(24.dp)
-        )
-        
-        Text(
-            text = title,
-            style = MaterialTheme.typography.subtitle1,
+        Row(
             modifier = Modifier
-                .padding(start = 16.dp)
-                .weight(1f)
-        )
-        
-        Switch(
-            checked = isChecked,
-            onCheckedChange = {
-                isChecked = it
-                onValueChange(it)
-            }
-        )
+                .fillMaxWidth()
+                .clickable {
+                    isChecked = !isChecked
+                    onValueChange(isChecked)
+                }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                modifier = Modifier.size(24.dp)
+            )
+            
+            Text(
+                text = title,
+                style = MaterialTheme.typography.subtitle1,
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(1f)
+            )
+            
+            Switch(
+                checked = isChecked,
+                onCheckedChange = {
+                    isChecked = it
+                    onValueChange(it)
+                }
+            )
+        }
     }
     
-    Divider(
-        modifier = Modifier.padding(start = 56.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.1f)
-    )
+    Spacer(modifier = Modifier.height(8.dp))
 }

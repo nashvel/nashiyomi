@@ -2,9 +2,12 @@ package com.example.tachiyomi.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.ui.layout.Layout
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,6 +19,9 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Check
+import com.example.tachiyomi.ui.components.NeomorphicCard
+import com.example.tachiyomi.ui.components.NeomorphicSurface
+import com.example.tachiyomi.ui.components.NeomorphicTopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +51,7 @@ fun MangaDetailScreen(
     
     Scaffold(
         topBar = {
-            TopAppBar(
+            NeomorphicTopAppBar(
                 title = { Text(manga.title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
@@ -57,7 +63,7 @@ fun MangaDetailScreen(
                         Icon(
                             imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
-                            tint = if (isFavorite) MaterialTheme.colors.secondary else Color.White
+                            tint = if (isFavorite) MaterialTheme.colors.secondary else MaterialTheme.colors.onSurface
                         )
                     }
                 }
@@ -100,18 +106,27 @@ fun MangaHeader(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top
         ) {
-            Card(
+            NeomorphicCard(
                 modifier = Modifier
-                    .width(100.dp)
-                    .height(150.dp),
-                elevation = 4.dp
+                    .width(110.dp)
+                    .height(160.dp),
+                cornerRadius = 12.dp,
+                shadowElevation = 6.dp
             ) {
-                AsyncImage(
-                    model = manga.thumbnailUrl,
-                    contentDescription = manga.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
+                ) {
+                    AsyncImage(
+                        model = manga.thumbnailUrl,
+                        contentDescription = manga.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                }
             }
             
             Column(
@@ -192,17 +207,23 @@ fun StatusChip(status: MangaStatus) {
         else -> MaterialTheme.colors.onSurface.copy(alpha = 0.1f) to MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
     }
     
-    Surface(
-        color = backgroundColor,
-        shape = MaterialTheme.shapes.small,
-        modifier = Modifier.padding(vertical = 4.dp)
+    NeomorphicSurface(
+        modifier = Modifier
+            .padding(vertical = 4.dp),
+        cornerRadius = 8.dp,
+        shadowElevation = 4.dp
     ) {
-        Text(
-            text = status.name,
-            color = textColor,
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        )
+        Box(
+            modifier = Modifier
+                .background(backgroundColor)
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+        ) {
+            Text(
+                text = status.name,
+                color = textColor,
+                style = MaterialTheme.typography.caption
+            )
+        }
     }
 }
 
@@ -248,17 +269,18 @@ fun ChapterItem(
 ) {
     val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
     
-    Card(
+    NeomorphicCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
-        elevation = 1.dp
+            .padding(horizontal = 16.dp, vertical = 6.dp),
+        cornerRadius = 12.dp,
+        shadowElevation = 4.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onClick)
-                .padding(16.dp),
+                .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(

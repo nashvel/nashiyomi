@@ -56,9 +56,9 @@ com.example.tachiyomi.app-ui-util-release-54 C:\Users\user\.gradle\caches\8.11.1
 com.example.tachiyomi.app-ui-unit-release-55 C:\Users\user\.gradle\caches\8.11.1\transforms\df35de1f41dfa4b719d111a925ccbb13\transformed\ui-unit-release\res
 com.example.tachiyomi.app-lifecycle-viewmodel-ktx-2.6.1-56 C:\Users\user\.gradle\caches\8.11.1\transforms\f9b16ce9928614d8aa12b586415b0e52\transformed\lifecycle-viewmodel-ktx-2.6.1\res
 com.example.tachiyomi.app-ui-graphics-release-57 C:\Users\user\.gradle\caches\8.11.1\transforms\fe8b2b82ac806b0d94dac05fd24bbb77\transformed\ui-graphics-release\res
-com.example.tachiyomi.app-resValues-58 C:\Users\user\OneDrive\Desktop\tachiyomi\app\build\generated\res\resValues\debug
-com.example.tachiyomi.app-packageDebugResources-59 C:\Users\user\OneDrive\Desktop\tachiyomi\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.example.tachiyomi.app-packageDebugResources-60 C:\Users\user\OneDrive\Desktop\tachiyomi\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.example.tachiyomi.app-debug-61 C:\Users\user\OneDrive\Desktop\tachiyomi\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.example.tachiyomi.app-debug-62 C:\Users\user\OneDrive\Desktop\tachiyomi\app\src\debug\res
-com.example.tachiyomi.app-main-63 C:\Users\user\OneDrive\Desktop\tachiyomi\app\src\main\res
+com.example.tachiyomi.app-resValues-58 C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\build\generated\res\resValues\debug
+com.example.tachiyomi.app-packageDebugResources-59 C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.tachiyomi.app-packageDebugResources-60 C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.tachiyomi.app-debug-61 C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.tachiyomi.app-debug-62 C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\debug\res
+com.example.tachiyomi.app-main-63 C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\res
