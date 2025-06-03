@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Create
 import com.example.tachiyomi.ui.components.NeomorphicBottomBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -36,7 +37,8 @@ fun NashiyomiApp() {
             Screen.Library.route, 
             Screen.Browse.route, 
             Screen.History.route, 
-            Screen.Settings.route
+            Screen.Settings.route,
+            Screen.CodeEditor.route
         )
     }
     
@@ -63,6 +65,9 @@ fun NavigationGraph(navController: NavHostController) {
                     navController.navigate("manga_detail/$mangaId")
                 }
             )
+        }
+        composable(Screen.CodeEditor.route) {
+            CodeEditorScreen(navController = navController)
         }
         composable(Screen.Browse.route) {
             BrowseScreen(
@@ -120,6 +125,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         Screen.Library,
         Screen.Browse,
         Screen.History,
+        Screen.CodeEditor,
         Screen.Settings
     )
     
@@ -163,4 +169,5 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
     object Browse : Screen("browse", "Browse", Icons.Filled.Search)
     object History : Screen("history", "History", Icons.Filled.List)
     object Settings : Screen("settings", "Settings", Icons.Filled.Settings)
+    object CodeEditor : Screen("code_editor", "Code", Icons.Filled.Create)
 }
