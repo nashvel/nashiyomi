@@ -126,7 +126,7 @@ fun FileBrowserDialog(
                     Button(
                         onClick = {
                             // Create a new file and select it
-                            val newFile = CodeFile("New File.kt", ProgrammingLanguage.KOTLIN)
+                            val newFile = CodeFile("New File.html", ProgrammingLanguage.HTML)
                             onFileSelected(newFile)
                             onDismiss()
                         },
@@ -249,11 +249,9 @@ fun FileItem(
     onClick: () -> Unit
 ) {
     val icon = when (file.language) {
-        ProgrammingLanguage.KOTLIN -> EditorIcons.Android
         ProgrammingLanguage.HTML -> EditorIcons.Web
         ProgrammingLanguage.CSS -> EditorIcons.Brush
         ProgrammingLanguage.JAVASCRIPT -> EditorIcons.Javascript
-        ProgrammingLanguage.PYTHON -> EditorIcons.Code
         ProgrammingLanguage.MARKDOWN -> EditorIcons.Description
     }
     
@@ -275,11 +273,9 @@ fun FileItem(
                 imageVector = icon,
                 contentDescription = "File Icon",
                 tint = when (file.language) {
-                    ProgrammingLanguage.KOTLIN -> Color(0xFF7F52FF)
                     ProgrammingLanguage.HTML -> Color(0xFFE44D26)
                     ProgrammingLanguage.CSS -> Color(0xFF264DE4)
                     ProgrammingLanguage.JAVASCRIPT -> Color(0xFFF7DF1E)
-                    ProgrammingLanguage.PYTHON -> Color(0xFF3776AB)
                     ProgrammingLanguage.MARKDOWN -> Color(0xFF0078D7)
                 },
                 modifier = Modifier.padding(end = 16.dp)

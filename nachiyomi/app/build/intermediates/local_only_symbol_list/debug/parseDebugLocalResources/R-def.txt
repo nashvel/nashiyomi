@@ -36,3 +36,4 @@ string show_more
 string status
 string summary
 style Theme.Nashiyomi
+xml file_paths

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-26:12
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:2:1-37:12
 MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\user\.gradle\caches\8.11.1\transforms\7de5ed82dd10f323c045153f9ea6c03a\transformed\coil-compose-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\user\.gradle\caches\8.11.1\transforms\be1f517a38e9f4f5a114ae9bb7811025\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [io.coil-kt:coil:2.4.0] C:\Users\user\.gradle\caches\8.11.1\transforms\35ba2662657bc3973ab04cf00954ce0a\transformed\coil-2.4.0\AndroidManifest.xml:2:1-7:12
@@ -96,8 +96,8 @@ ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\Andro
 	android:name
 		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:7:5-24:19
-INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:7:5-24:19
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:7:5-35:19
+INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:7:5-35:19
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\user\.gradle\caches\8.11.1\transforms\6b6ad0a631af539b5778d3f4337575c6\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\user\.gradle\caches\8.11.1\transforms\6b6ad0a631af539b5778d3f4337575c6\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\user\.gradle\caches\8.11.1\transforms\a3c2aef0aedbc4d106041cbf8e3028c9\transformed\constraintlayout-2.0.1\AndroidManifest.xml:9:5-20
@@ -132,26 +132,42 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\user\.gradle\cache
 		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:8:9-35
 	android:theme
 		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:13:9-47
-activity#com.example.tachiyomi.MainActivity
-ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:14:9-23:20
-	android:label
-		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:17:13-45
+provider#androidx.core.content.FileProvider
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:16:9-24:20
+	android:grantUriPermissions
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:20:13-47
+	android:authorities
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:18:13-69
 	android:exported
-		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:16:13-36
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:19:13-37
+	android:name
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:17:13-62
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:21:13-23:54
+	android:resource
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:23:17-51
+	android:name
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:22:17-67
+activity#com.example.tachiyomi.MainActivity
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:25:9-34:20
+	android:label
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:28:13-45
+	android:exported
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:27:13-36
 	android:theme
-		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:18:13-51
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:29:13-51
 	android:name
-		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:15:13-41
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:26:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:19:13-22:29
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:30:13-33:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:20:17-69
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:31:17-69
 	android:name
-		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:20:25-66
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:31:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:21:17-77
+ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:32:17-77
 	android:name
-		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:21:27-74
+		ADDED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml:32:27-74
 uses-sdk
 INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\user\OneDrive\Desktop\tachiyomi\nachiyomi\app\src\main\AndroidManifest.xml

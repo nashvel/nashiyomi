@@ -31,6 +31,13 @@ import com.example.tachiyomi.ui.components.NeomorphicCard
 import com.example.tachiyomi.ui.components.NeomorphicSurface
 import com.example.tachiyomi.ui.components.NeomorphicTopAppBar
 import com.example.tachiyomi.ui.editor.*
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.FileProvider
+import android.content.Context
+import android.os.Environment
+import java.io.File
+import java.io.FileWriter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,23 +46,24 @@ import kotlinx.coroutines.flow.asStateFlow
  * ViewModel for the code editor screen that handles code content and file operations
  */
 class CodeEditorViewModel : ViewModel() {
-    private val _codeContent = MutableStateFlow(TextFieldValue(CodeTemplates.getTemplateForLanguage(ProgrammingLanguage.KOTLIN, "Untitled.kt")))
+    private val _codeContent = MutableStateFlow(TextFieldValue(CodeTemplates.getTemplateForLanguage(ProgrammingLanguage.HTML, "Untitled.html")))
     val codeContent: StateFlow<TextFieldValue> = _codeContent.asStateFlow()
 
-    private val _currentFileName = MutableStateFlow("Untitled.kt")
+    private val _currentFileName = MutableStateFlow("Untitled.html")
     val currentFileName: StateFlow<String> = _currentFileName.asStateFlow()
 
-    private val _currentLanguage = MutableStateFlow(ProgrammingLanguage.KOTLIN)
+    private val _currentLanguage = MutableStateFlow(ProgrammingLanguage.HTML)
     val currentLanguage: StateFlow<ProgrammingLanguage> = _currentLanguage.asStateFlow()
+    
+    // Map to store the actual content of saved files
+    private val _fileContents = MutableStateFlow<Map<String, String>>(mutableMapOf())
 
     // Mock list of saved files
     private val _savedFiles = MutableStateFlow<List<CodeFile>>(
         listOf(
-            CodeFile("Example.kt", ProgrammingLanguage.KOTLIN),
-            CodeFile("styles.css", ProgrammingLanguage.CSS),
             CodeFile("index.html", ProgrammingLanguage.HTML),
+            CodeFile("styles.css", ProgrammingLanguage.CSS),
             CodeFile("script.js", ProgrammingLanguage.JAVASCRIPT),
-            CodeFile("main.py", ProgrammingLanguage.PYTHON),
             CodeFile("notes.md", ProgrammingLanguage.MARKDOWN)
         )
     )
@@ -128,11 +136,9 @@ class CodeEditorViewModel : ViewModel() {
         if (previousLanguage != language) {
             val baseName = _currentFileName.value.substringBeforeLast(".", _currentFileName.value)
             val newExtension = when (language) {
-                ProgrammingLanguage.KOTLIN -> "kt"
                 ProgrammingLanguage.HTML -> "html"
                 ProgrammingLanguage.CSS -> "css"
                 ProgrammingLanguage.JAVASCRIPT -> "js"
-                ProgrammingLanguage.PYTHON -> "py"
                 ProgrammingLanguage.MARKDOWN -> "md"
             }
             
@@ -147,27 +153,64 @@ class CodeEditorViewModel : ViewModel() {
     }
 
     fun saveCurrentFile() {
-        // In a real implementation, this would save to local storage
-        // For now, we just update the saved files list if it's a new file
-        val existingFile = _savedFiles.value.find { it.name == _currentFileName.value }
+        // Save the file content to our map
+        val updatedContents = _fileContents.value.toMutableMap()
+        updatedContents[_currentFileName.value] = _codeContent.value.text
+        _fileContents.value = updatedContents
         
-        if (existingFile == null) {
-            val updatedFilesList = _savedFiles.value.toMutableList()
-            updatedFilesList.add(CodeFile(_currentFileName.value, _currentLanguage.value))
-            _savedFiles.value = updatedFilesList
-        }
-        
-        // Update last saved file for notification
+        // Set the last saved file for notification
         _lastSavedFile.value = _currentFileName.value
+        
+        // After notification is shown, clear it
+        _lastSavedFile.value = null
+    }
+    
+    /**
+     * Exports current HTML file and associated CSS/JS files to the external storage
+     * and returns the URI of the main HTML file
+     */
+    fun exportAndGetHtmlFileUri(context: Context): Uri? {
+        // Save current file first
+        saveCurrentFile()
+        
+        try {
+            // Create directory for exported files
+            val exportDir = File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "nashiyomi_web")
+            if (!exportDir.exists()) {
+                exportDir.mkdirs()
+            }
+            
+            // Create the HTML file
+            val htmlFile = File(exportDir, _currentFileName.value)
+            FileWriter(htmlFile).use { it.write(_codeContent.value.text) }
+            
+            // Also export any CSS and JS files that might be referenced
+            _fileContents.value.forEach { (filename, content) ->
+                if (filename.endsWith(".css") || filename.endsWith(".js")) {
+                    val file = File(exportDir, filename)
+                    FileWriter(file).use { it.write(content) }
+                }
+            }
+            
+            // Return the URI for the HTML file
+            return FileProvider.getUriForFile(
+                context,
+                "com.example.tachiyomi.fileprovider",
+                htmlFile
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
     }
 
     fun loadFile(file: CodeFile) {
-        // In a real implementation, this would load from local storage
         _currentFileName.value = file.name
         _currentLanguage.value = file.language
         
-        // Set content based on file type using templates
-        _codeContent.value = TextFieldValue(CodeTemplates.getTemplateForLanguage(file.language, file.name))
+        // Get the content if it exists in our map, otherwise use the template
+        val content = _fileContents.value[file.name] ?: CodeTemplates.getTemplateForLanguage(file.language, file.name)
+        _codeContent.value = TextFieldValue(content)
     }
 }
 
@@ -248,6 +291,37 @@ fun CodeEditorScreenContent(
                     }
                 },
                 actions = {
+                    // Get the context once at the Composable level
+                    val context = androidx.compose.ui.platform.LocalContext.current
+                    
+                    // Run button (only visible for HTML files)
+                    if (currentFileName.endsWith(".html")) {
+                        IconButton(
+                            onClick = {
+                                // Export the HTML file and get its URI
+                                val htmlFileUri = viewModel.exportAndGetHtmlFileUri(context)
+                                
+                                // Open the file in a browser
+                                htmlFileUri?.let { uri ->
+                                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                                        setDataAndType(uri, "text/html")
+                                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    }
+                                    context.startActivity(intent)
+                                }
+                                
+                                showNotification(
+                                    EditorNotification(
+                                        message = "Opening $currentFileName in browser",
+                                        type = NotificationType.SUCCESS
+                                    )
+                                )
+                            }
+                        ) {
+                            Icon(Icons.Filled.PlayArrow, contentDescription = "Run in Browser")
+                        }
+                    }
+                    
                     IconButton(
                         onClick = { 
                             viewModel.saveCurrentFile()

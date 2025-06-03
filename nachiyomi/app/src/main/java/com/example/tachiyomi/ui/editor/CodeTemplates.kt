@@ -11,39 +11,14 @@ object CodeTemplates {
      */
     fun getTemplateForLanguage(language: ProgrammingLanguage, fileName: String): String {
         return when (language) {
-            ProgrammingLanguage.KOTLIN -> kotlinTemplate(fileName)
             ProgrammingLanguage.HTML -> htmlTemplate(fileName)
             ProgrammingLanguage.CSS -> cssTemplate(fileName)
             ProgrammingLanguage.JAVASCRIPT -> javascriptTemplate(fileName)
-            ProgrammingLanguage.PYTHON -> pythonTemplate(fileName)
             ProgrammingLanguage.MARKDOWN -> markdownTemplate()
         }
     }
 
-    private fun kotlinTemplate(fileName: String): String {
-        val className = fileName.substringBefore(".").capitalize()
-        return """
-            /**
-             * Nashiyomi Code Editor - Kotlin File
-             * File: $fileName
-             */
-            
-            fun main() {
-                println("Hello from Nashiyomi Code Editor!")
-                
-                // Your code here
-            }
-            
-            class $className {
-                // Properties
-                
-                // Methods
-                fun doSomething() {
-                    // Implementation
-                }
-            }
-        """.trimIndent()
-    }
+
 
     private fun htmlTemplate(fileName: String): String {
         return """
@@ -1257,186 +1232,6 @@ object CodeTemplates {
         """.trimIndent()
     }
 
-    private fun pythonTemplate(fileName: String): String {
-        return """
-            #!/usr/bin/env python3
-            # -*- coding: utf-8 -*-
-            
-            # Python IDE Template
-            # A full-featured Python template with examples of various programming concepts
-            
-            # Standard library imports
-            import sys
-            import os
-            import json
-            import argparse
-            import logging
-            from datetime import datetime
-            from typing import List, Dict, Any, Optional, Union, Tuple
-            from pathlib import Path
-            
-            # Set up logging
-            logging.basicConfig(
-                level=logging.INFO,
-                format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-            )
-            logger = logging.getLogger(__name__)
-            
-            # Example class with type hints and docstrings
-            class DataProcessor:
-                # Class for processing data
-                
-                def __init__(self, name: str, data_path: Optional[str] = None):
-                    # Initialize the data processor
-                    self.name = name
-                    self.created_at = datetime.now()
-                    self.data_path = data_path or './data'
-                    self.data: List[Dict[str, Any]] = []
-                    
-                def load_data(self, filename: str) -> bool:
-                    # Load data from a JSON file
-                    try:
-                        file_path = os.path.join(self.data_path, filename)
-                        if os.path.exists(file_path):
-                            with open(file_path, 'r', encoding='utf-8') as f:
-                                self.data = json.load(f)
-                            logger.info("Loaded {} records from {}".format(len(self.data), filename))
-                            return True
-                        else:
-                            logger.warning("File not found: {}".format(file_path))
-                            return False
-                    except Exception as e:
-                        logger.error("Error loading data: {}".format(str(e)))
-                        return False
-                        
-                def save_data(self, filename: str) -> bool:
-                    # Save data to a JSON file
-                    try:
-                        # Create directory if it doesn't exist
-                        if not os.path.exists(self.data_path):
-                            os.makedirs(self.data_path)
-                            
-                        file_path = os.path.join(self.data_path, filename)
-                        with open(file_path, 'w', encoding='utf-8') as f:
-                            json.dump(self.data, f, indent=4)
-                        logger.info("Saved {} records to {}".format(len(self.data), filename))
-                        return True
-                    except Exception as e:
-                        logger.error("Error saving data: {}".format(str(e)))
-                        return False
-                        
-                def add_item(self, item: Dict[str, Any]) -> None:
-                    # Add an item to the data list
-                    self.data.append(item)
-                    logger.debug("Added item: {}".format(item))
-                    
-                def get_statistics(self) -> Dict[str, Any]:
-                    # Calculate statistics on the data
-                    stats = {
-                        "count": len(self.data),
-                        "fields": set()
-                    }
-                    
-                    # Collect all field names across all records
-                    for item in self.data:
-                        for key in item.keys():
-                            stats["fields"].add(key)
-                    
-                    # Convert set to list for JSON serialization
-                    stats["fields"] = list(stats["fields"])
-                    return stats
-                    
-            # Example utility functions
-            def parse_arguments() -> argparse.Namespace:
-                # Parse command line arguments
-                parser = argparse.ArgumentParser(description="Data processing script")
-                parser.add_argument(
-                    "-f", "--file", 
-                    help="Input file path", 
-                    default="data.json"
-                )
-                parser.add_argument(
-                    "-o", "--output", 
-                    help="Output file path"
-                )
-                parser.add_argument(
-                    "-v", "--verbose", 
-                    action="store_true", 
-                    help="Enable verbose output"
-                )
-                return parser.parse_args()
-                
-            def process_file(file_path: str) -> Tuple[bool, Any]:
-                # Process a file and return success flag and data
-                try:
-                    # Check file extension
-                    _, ext = os.path.splitext(file_path)
-                    
-                    if ext.lower() == '.json':
-                        with open(file_path, 'r', encoding='utf-8') as f:
-                            return True, json.load(f)
-                    elif ext.lower() == '.txt':
-                        with open(file_path, 'r', encoding='utf-8') as f:
-                            return True, f.read().splitlines()
-                    else:
-                        logger.error("Unsupported file extension: {}".format(ext))
-                        return False, None
-                except Exception as e:
-                    logger.error("Error processing file: {}".format(str(e)))
-                    return False, None
-            
-            def main():
-                # Main function
-                print("Python IDE script is running!")
-                logger.info("Application started")
-                
-                # Parse command line arguments
-                args = parse_arguments()
-                
-                # Set log level based on verbosity
-                if args.verbose:
-                    logger.setLevel(logging.DEBUG)
-                    logger.debug("Debug mode enabled")
-                
-                # Create a data processor
-                processor = DataProcessor("DataAnalyzer")
-                
-                # Example data
-                sample_data = [
-                    {"id": 1, "name": "Alpha", "value": 10.5},
-                    {"id": 2, "name": "Beta", "value": 20.3},
-                    {"id": 3, "name": "Gamma", "value": 15.7}
-                ]
-                
-                # Add sample data to the processor
-                for item in sample_data:
-                    processor.add_item(item)
-                
-                # Save the data
-                if processor.save_data("output.json"):
-                    print("Data saved successfully")
-                
-                # Display statistics
-                stats = processor.get_statistics()
-                print("Statistics:\n- Count: {}\n- Fields: {}".format(stats['count'], ', '.join(stats['fields'])))
-                
-                print("\nProcessing complete.")
-                logger.info("Application finished")
-                
-            # Standard boilerplate to call the main() function
-            if __name__ == "__main__":
-                try:
-                    main()
-                except KeyboardInterrupt:
-                    print("\nProgram interrupted by user")
-                    sys.exit(1)
-                except Exception as e:
-                    print("\nAn error occurred: {}".format(str(e)))
-                    logger.exception("Unhandled exception")
-                    sys.exit(1)
-        """.trimIndent()
-    }
-
     private fun markdownTemplate(): String {
         return """
             # Nashiyomi Documentation
@@ -1501,54 +1296,79 @@ object CodeTemplates {
             ```yaml
             theme: dark
             language: en
-            defaultEditor: kotlin
+            defaultEditor: html
             autoSave: true
             ```
             
             ## Code Examples
             
-            ### Kotlin Example
+            ### HTML Example
             
-            ```kotlin
-            /**
-             * A simple Kotlin example
-             */
-            fun main() {
-                println("Hello from Nashiyomi!")
-                
-                val app = NashiyomiApp()
-                app.start()
-            }
-            
-            class NashiyomiApp {
-                fun start() {
-                    println("Nashiyomi app started successfully!")
-                    // Implementation details
-                }
-            }
+            ```html
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Nashiyomi</title>
+                <link rel="stylesheet" href="styles.css">
+            </head>
+            <body>
+                <header>
+                    <h1>Welcome to Nashiyomi</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Library</a></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </nav>
+                </header>
+                <main>
+                    <section class="content">
+                        <h2>Your Manga Collection</h2>
+                        <p>Start building your collection today!</p>
+                    </section>
+                </main>
+                <footer>
+                    <p>&copy; 2025 Nashiyomi - Modern Manga Reader</p>
+                </footer>
+            </body>
+            </html>
             ```
             
-            ### Python Example
+            ### JavaScript Example
             
-            ```python
-            # A simple Python example
-            import sys
-            
-            def main():
-                print("Hello from Nashiyomi!")
-                app = NashiyomiApp()
-                app.start()
+            ```javascript
+            /**
+             * Nashiyomi App Controller
+             * A simple JavaScript example
+             */
+            class NashiyomiApp {
+                constructor() {
+                    this.appName = "Nashiyomi";
+                    this.initialized = false;
+                    console.log("App instance created");
+                }
                 
-            class NashiyomiApp:
-                def __init__(self):
-                    self.name = "Nashiyomi"
-                    
-                def start(self):
-                    print(f"{self.name} app started successfully!")
-                    # Implementation details
-                    
-            if __name__ == "__main__":
-                main()
+                init() {
+                    console.log("Initializing app...");
+                    // Setup code here
+                    this.initialized = true;
+                    return this;
+                }
+                
+                start() {
+                    if (!this.initialized) {
+                        this.init();
+                    }
+                    console.log("App started successfully!");
+                }
+            }
+            
+            // Create and start the app
+            const app = new NashiyomiApp();
+            app.start();
             ```
             
             ## Formatting Guide

@@ -301,72 +301,7 @@ object SyntaxHighlighter {
         }
     }
 
-    private fun highlightPython(code: String): AnnotatedString {
-        return buildAnnotatedString {
-            val keywords = listOf("def", "class", "if", "elif", "else", "for", "while", "try", "except", "finally", "import", "from", "as", "return", "yield", "break", "continue", "pass", "True", "False", "None", "and", "or", "not", "is", "in", "lambda", "with", "global", "nonlocal")
-            
-            val text = code
-            var currentPosition = 0
-            
-            // Simple tokenization
-            val tokens = text.split(Regex("(\\s+|[{}()\\[\\],.;:]|\\b)"))
-            
-            for (token in tokens) {
-                val tokenStart = text.indexOf(token, currentPosition)
-                if (tokenStart == -1) continue
-                
-                currentPosition = tokenStart + token.length
-
-                when {
-                    // Comments
-                    token.startsWith("#") -> {
-                        val lineEnd = text.indexOf('\n', tokenStart)
-                        val commentEnd = if (lineEnd == -1) text.length else lineEnd
-                        val comment = text.substring(tokenStart, commentEnd)
-                        withStyle(SpanStyle(color = pythonCommentColor)) {
-                            append(comment)
-                        }
-                        currentPosition = commentEnd
-                    }
-                    // Strings (single quotes)
-                    token.startsWith("'") && token.endsWith("'") && token.length > 1 -> {
-                        withStyle(SpanStyle(color = pythonStringColor)) {
-                            append(token)
-                        }
-                    }
-                    // Strings (double quotes)
-                    token.startsWith("\"") && token.endsWith("\"") && token.length > 1 -> {
-                        withStyle(SpanStyle(color = pythonStringColor)) {
-                            append(token)
-                        }
-                    }
-                    // Numbers
-                    token.matches(Regex("-?\\d+(\\.\\d+)?")) -> {
-                        withStyle(SpanStyle(color = pythonNumberColor)) {
-                            append(token)
-                        }
-                    }
-                    // Keywords
-                    token in keywords -> {
-                        withStyle(SpanStyle(color = pythonKeywordColor, fontWeight = FontWeight.Bold)) {
-                            append(token)
-                        }
-                    }
-                    // Function calls
-                    token.matches(Regex("[a-zA-Z_][a-zA-Z0-9_]*")) && 
-                    text.substring(currentPosition).trimStart().startsWith("(") -> {
-                        withStyle(SpanStyle(color = pythonFunctionColor)) {
-                            append(token)
-                        }
-                    }
-                    // Default
-                    else -> {
-                        append(token)
-                    }
-                }
-            }
-        }
-    }
+    // Markdown highlighting function follows
 
     private fun highlightMarkdown(code: String): AnnotatedString {
         return buildAnnotatedString {

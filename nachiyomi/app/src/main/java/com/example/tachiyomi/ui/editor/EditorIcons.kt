@@ -14,7 +14,7 @@ object EditorIcons {
     val Web: ImageVector = Icons.Filled.Create // HTML files
     val Brush: ImageVector = Icons.Filled.Create // CSS files
     val Javascript: ImageVector = Icons.Filled.Create // JavaScript files 
-    val Android: ImageVector = Icons.Filled.Create // For Android/Kotlin files
+    // Only supporting HTML, CSS, JavaScript, and Markdown
     val Description: ImageVector = Icons.Filled.Create // For text files
     
     /**
@@ -22,11 +22,9 @@ object EditorIcons {
      */
     fun getIconForFile(fileName: String): ImageVector {
         return when {
-            fileName.endsWith(".kt") -> Android
             fileName.endsWith(".html") -> Web
             fileName.endsWith(".css") -> Brush
             fileName.endsWith(".js") -> Javascript
-            fileName.endsWith(".py") -> Code
             fileName.endsWith(".md") -> Description
             else -> Description
         }
